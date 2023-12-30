@@ -16,7 +16,7 @@ void print_result (int sum, int p, int r) {
 int main () {
 
 	int n = 1000;
-	for (int r = 2; r < 1000000; r++) {
+	for (int r = 2; r < 100000; r++) {
 		long long int sum = 1;
 		for (int p = 1; p < n; p++) { // p => power
 			sum += pow(r, p);
