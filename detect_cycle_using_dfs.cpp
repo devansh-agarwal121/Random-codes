@@ -1,15 +1,15 @@
 bool dfs (int node, vector <int>& vis, vector <int>& pathVis, vector <int> adj[]) {
     vis[node] = 1;
-    pathVis[node] = 1;
+    pathVis[node] = 1; // vis[node] = 2;
     for (int adjNode : adj[node]) {
         if (!vis[adjNode]) {
             if (dfs(adjNode, vis, pathVis, adj)) return true;
         }
         else {
-            if (pathVis[adjNode]) return true;
+            if (pathVis[adjNode]) return true; // if (vis[adjNode] == 2) return true;
         }
     }
-    pathVis[node] = 0;
+    pathVis[node] = 0; // vis[node] = 1; // bcs going forward it is visited but not in current path
     return false;
 }
 
