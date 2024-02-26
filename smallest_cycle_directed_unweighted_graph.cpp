@@ -43,13 +43,13 @@ vector <int> lexicTopo (int& V, vector <int> indeg, vector < vector <int> >& adj
 
 void dfs (int node, vector <pair <int, int> >& vis, vector < vector <int> >& adj, int &tempSize) {
     for(int i=0; i<adj[node].size(); i++){
-        int cur = adj[node][i];
-        if(vis[cur].first == -1){
-            vis[cur] = {vis[node].first + 1, vis[node].second};
-            dfs(cur, vis, adj, tempSize);
+        int adjNode = adj[node][i];
+        if(vis[adjNode].first == -1){
+            vis[adjNode] = {vis[node].first + 1, vis[node].second};
+            dfs(adjNode, vis, adj, tempSize);
         }
-        else if(vis[cur].second == vis[node].second){
-            tempSize = min(tempSize, vis[node].first + 1 - vis[cur].first);
+        else if(vis[adjNode].second == vis[node].second){
+            tempSize = min(tempSize, vis[node].first + 1 - vis[adjNode].first);
         }
     }
     vis[node].second = -1;
