@@ -26,7 +26,7 @@ vector <int> lexicTopo (int& V, vector <int> indeg, vector < vector <int> >& adj
         }
     }
 
-    // if (ans.size() != V) return {-1}; // to check cycle
+    if (ans.size() != V) return {-1}; // to check cycle
     return ans;
 }
 
@@ -47,14 +47,17 @@ int main () {
         }
     }
     
-    vector <int> lexSmall = lexicTopo<int, vector<int>, greater<int> >(V, indeg, adj);
-    vector <int> lexLarge = lexicTopo<int, vector <int>, less <int> >(V, indeg, adj);
+    vector <int> lexSmall = lexicTopo<int, vector<int>, greater<int> >(V, indeg, adj);    // minHeap
+    vector <int> lexLarge = lexicTopo<int, vector<int>, less<int> >(V, indeg, adj);       // maxHeap
 
-    for (int i : lexSmall) cout << i << " ";
-        cout << endl;
-    for (int i : lexLarge) cout << i << " ";
-        cout << endl;
-
+    if (lexSmall[0] == -1) {
+        cout << "There exists a cycle. Input graph is not a DAG. Topo Sort not possible.\n" ;
+    } else {
+        for (int i : lexSmall) cout << i << " ";
+            cout << endl;
+        for (int i : lexLarge) cout << i << " ";
+            cout << endl;
+    }
     return 0;
 }
 
@@ -69,10 +72,4 @@ int main () {
                 3 1
         o/p:    4 5 0 2 3 1 
                 5 4 2 3 1 0
-
-
 */
-
-
-
-
