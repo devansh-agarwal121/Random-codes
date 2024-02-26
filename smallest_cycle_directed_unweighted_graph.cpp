@@ -41,18 +41,19 @@ vector <int> lexicTopo (int& V, vector <int> indeg, vector < vector <int> >& adj
     return ans;
 }
 
-void dfs (int node, vector <pair <int, int> >& vis, vector < vector <int> >& adj, int &tempSize) {
+void dfs (int node, vector <pair <int, int> >& vis, vector < vector <int> >& adj, int &currSize) {
     for(int i=0; i<adj[node].size(); i++){
         int adjNode = adj[node][i];
         if(vis[adjNode].first == -1){
             vis[adjNode] = {vis[node].first + 1, vis[node].second};
-            dfs(adjNode, vis, adj, tempSize);
+            dfs(adjNode, vis, adj, currSize);
         }
         else if(vis[adjNode].second == vis[node].second){
-            tempSize = min(tempSize, vis[node].first + 1 - vis[adjNode].first);
+            currSize = min(currSize, vis[node].first - vis[adjNode].first + 1); 
+            // vis[node].first == distance from the greatest grandparent (for whom dfs was initially called), similarly for adjNode. +1 for the last edge
         }
     }
-    vis[node].second = -1;
+    vis[node].second = -1; // to reinitialise main parent back to -1.
 }
 
 int main() {
@@ -80,10 +81,10 @@ int main() {
         vector <pair <int, int> > vis (V, {-1, -1});
         for (int i = 0; i < V; i++) {
             if (vis[i].first == -1) {
-                int tempSize = INT_MAX;
+                int currSize = INT_MAX;
                 vis[i] = {0, i};
-                dfs (i, vis, adj, tempSize);
-                minCycle = min(minCycle, tempSize);
+                dfs (i, vis, adj, currSize);
+                minCycle = min(minCycle, currSize);
             }
         }
         cout << minCycle;
@@ -123,3 +124,4 @@ int main() {
                 8 1
                 3 5
         o/p:    3
+*/
